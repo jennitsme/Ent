@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import { store } from './src/server/store';
 import { telegramService } from './src/server/services/TelegramService';
@@ -7,7 +8,7 @@ import { cronService } from './src/server/services/CronService';
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = 5000;
 
   app.use(express.json());
 
@@ -49,8 +50,14 @@ async function startServer() {
   agentService.initialize();
   cronService.initialize();
 
-  // Vite middleware for development
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'production') {
+    const { default: serveStatic } = await import('serve-static');
+    const distPath = path.resolve(process.cwd(), 'dist');
+    app.use(serveStatic(distPath));
+    app.get('*', (_req, res) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+  } else {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
