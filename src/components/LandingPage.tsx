@@ -29,7 +29,7 @@ export function LandingPage({ onStart }: LandingPageProps) {
             <Terminal className="text-neon-red w-6 h-6 group-hover:scale-110 transition-transform" />
           </div>
           <h1 className="text-2xl font-display font-bold tracking-wider text-white group-hover:text-neon-red transition-colors">
-            FREEKLAW<span className="text-neon-red">.OS</span>
+            FREEKLAW
           </h1>
         </div>
         <div className="hidden md:flex items-center gap-8">
@@ -442,7 +442,7 @@ export function LandingPage({ onStart }: LandingPageProps) {
                 <div className="w-8 h-8 bg-neon-red/10 rounded-lg flex items-center justify-center border border-neon-red/50">
                   <Terminal className="text-neon-red w-4 h-4" />
                 </div>
-                <span className="font-display font-bold tracking-wider">FREEKLAW<span className="text-neon-red">.OS</span></span>
+                <span className="font-display font-bold tracking-wider">FREEKLAW</span>
               </div>
               <p className="text-white/30 text-sm leading-relaxed">
                 Next generation AI agent framework. Deploy autonomous intelligence with confidence.
