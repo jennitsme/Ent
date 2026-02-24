@@ -41,3 +41,4 @@ externalPort = 3000
 deploymentTarget = "autoscale"
 run = ["bash", "-c", "NODE_ENV=production npx tsx server.ts"]
 build = ["npm", "run", "build"]
+publicDir = "dist/public"
