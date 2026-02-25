@@ -5,11 +5,12 @@ class AgentService {
   private ai: GoogleGenAI | null = null;
 
   initialize() {
+    this.ai = null;
     const config = store.getConfig();
-    if (config.apiKey && config.provider === 'gemini') {
+    if (config.apiKey) {
       try {
         this.ai = new GoogleGenAI({ apiKey: config.apiKey });
-        store.addLog('Agent initialized with Gemini API', 'success');
+        store.addLog(`Agent initialized with ${config.provider || 'gemini'} API`, 'success');
       } catch (error) {
         store.addLog(`Failed to initialize Agent: ${error}`, 'error');
       }
@@ -23,8 +24,8 @@ class AgentService {
     }
 
     try {
-      const response = await this.ai!.models.generateContent({
-        model: "gemini-flash-latest",
+      const response = await this.ai.models.generateContent({
+        model: "gemini-2.0-flash",
         contents: prompt,
       });
       return response.text || "I couldn't generate a response.";
