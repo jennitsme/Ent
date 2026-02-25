@@ -78,6 +78,15 @@ export function LandingPage({ onStart }: LandingPageProps) {
               Secure, scalable, and ready for mission-critical tasks.
             </p>
 
+            <div className="bg-white/[0.03] border border-white/10 rounded-lg p-4 max-w-xl hover:border-neon-red/30 transition-all duration-300">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xs font-bold text-neon-red tracking-widest uppercase">Contract Address</span>
+              </div>
+              <p className="text-sm text-white/70 font-mono break-all select-all cursor-pointer hover:text-neon-red transition-colors" onClick={() => navigator.clipboard.writeText('8KkmpsPChG63QmkAhUo2UNQjnSSbNzQqggGPnHN8pump')} title="Click to copy">
+                8KkmpsPChG63QmkAhUo2UNQjnSSbNzQqggGPnHN8pump
+              </p>
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button
                 onClick={onStart}
