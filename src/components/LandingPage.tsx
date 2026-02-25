@@ -25,8 +25,8 @@ export function LandingPage({ onStart }: LandingPageProps) {
 
       <nav className="relative z-50 flex justify-between items-center px-6 py-6 md:px-12 border-b border-white/5 backdrop-blur-sm sticky top-0 bg-dark-bg/80">
         <div className="flex items-center gap-3 group cursor-pointer">
-          <div className="w-10 h-10 bg-neon-red/10 rounded-lg flex items-center justify-center border border-neon-red/50 shadow-[0_0_15px_rgba(255,0,60,0.3)] group-hover:shadow-[0_0_25px_rgba(255,0,60,0.6)] transition-all duration-300">
-            <Terminal className="text-neon-red w-6 h-6 group-hover:scale-110 transition-transform" />
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden group-hover:shadow-[0_0_25px_rgba(255,0,60,0.6)] transition-all duration-300">
+            <img src="/logo.png" alt="FREEKLAW" className="w-10 h-10 object-cover group-hover:scale-110 transition-transform" />
           </div>
           <h1 className="text-2xl font-display font-bold tracking-wider text-white group-hover:text-neon-red transition-colors">
             FREEKLAW
@@ -439,8 +439,8 @@ export function LandingPage({ onStart }: LandingPageProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-neon-red/10 rounded-lg flex items-center justify-center border border-neon-red/50">
-                  <Terminal className="text-neon-red w-4 h-4" />
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img src="/logo.png" alt="FREEKLAW" className="w-8 h-8 object-cover" />
                 </div>
                 <span className="font-display font-bold tracking-wider">FREEKLAW</span>
               </div>
