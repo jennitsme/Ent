@@ -114,7 +114,7 @@ export function Dashboard({ config, onLogout }: DashboardProps) {
             <Terminal className="text-neon-cyan w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-display font-bold tracking-wider text-white">FREEKLAW<span className="text-neon-cyan">.OS</span></h1>
+            <h1 className="text-2xl font-display font-bold tracking-wider text-white">ENTITY<span className="text-neon-cyan">.OS</span></h1>
             <div className="flex items-center gap-2 text-xs text-white/50">
               <span className="w-2 h-2 bg-neon-green rounded-full animate-pulse" />
               SYSTEM ONLINE

@@ -69,7 +69,7 @@ export default function App() {
             
             <div className="mb-8 text-center">
               <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tighter text-white mb-2 text-glow">
-                <GlitchText text="FREEKLAW" />
+                <GlitchText text="ENTITY" />
               </h1>
               <p className="text-neon-cyan/60 text-sm md:text-base tracking-widest uppercase font-tech">
                 AI Agent Deployment Protocol

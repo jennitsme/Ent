@@ -1,4 +1,4 @@
-# FREEKLAW.OS - AI Agent Framework
+# ENTITY.OS - AI Agent Framework
 
 ## Overview
 A Next-Gen AI Agent Framework built with React + Express. It provides a dashboard for deploying autonomous agents integrated with Gemini AI, Telegram, and cron-based scheduling.

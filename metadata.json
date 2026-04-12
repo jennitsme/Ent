@@ -1,5 +1,5 @@
 {
-  "name": "Freeklaw",
+  "name": "Entity",
   "description": "A high-tech platform to generate and install AI agents via a terminal interface.",
   "requestFramePermissions": []
 }

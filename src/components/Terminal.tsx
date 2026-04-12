@@ -17,8 +17,8 @@ interface LogLine {
 
 export function Terminal({ onComplete }: TerminalProps) {
   const [history, setHistory] = useState<LogLine[]>([
-    { id: 'init-1', text: 'Freeklaw OS v1.0.0 initialized...', type: 'system' },
-    { id: 'init-2', text: 'Type "npm install freeklaw" to begin agent deployment.', type: 'info' },
+    { id: 'init-1', text: 'Entity OS v1.0.0 initialized...', type: 'system' },
+    { id: 'init-2', text: 'Type "npm install entity" to begin agent deployment.', type: 'info' },
   ]);
   const [input, setInput] = useState('');
   const [step, setStep] = useState<Step>('IDLE');
@@ -73,9 +73,9 @@ export function Terminal({ onComplete }: TerminalProps) {
     const steps = [
       { text: 'Initializing package manager...', delay: 1500 },
       { text: 'Resolving dependency tree...', delay: 2000 },
-      { text: 'Fetching @freeklaw/core (v1.0.0)...', delay: 2500 },
-      { text: 'Fetching @freeklaw/agent-kit...', delay: 1800 },
-      { text: 'Fetching @freeklaw/telegram-bridge...', delay: 2200 },
+      { text: 'Fetching @entity/core (v1.0.0)...', delay: 2500 },
+      { text: 'Fetching @entity/agent-kit...', delay: 1800 },
+      { text: 'Fetching @entity/telegram-bridge...', delay: 2200 },
       { text: 'Verifying package integrity signatures...', delay: 3000 },
       { text: 'Downloading binary artifacts [34MB]...', delay: 4000 },
       { text: '[###.................] 15%', delay: 500 },
@@ -85,7 +85,7 @@ export function Terminal({ onComplete }: TerminalProps) {
       { text: '[###############.....] 75%', delay: 500 },
       { text: '[##################..] 90%', delay: 500 },
       { text: '[####################] 100%', delay: 500 },
-      { text: 'Extracting modules to /usr/local/bin/freeklaw...', delay: 2500 },
+      { text: 'Extracting modules to /usr/local/bin/entity...', delay: 2500 },
       { text: 'Compiling native extensions (node-gyp)...', delay: 3500 },
       { text: 'Optimizing AI inference engine...', delay: 2800 },
       { text: 'Configuring local environment variables...', delay: 1500 },
@@ -113,10 +113,10 @@ export function Terminal({ onComplete }: TerminalProps) {
     addLog(`> ${cmd}`, 'input');
 
     if (step === 'IDLE') {
-      if (trimmed === 'npm install freeklaw') {
+      if (trimmed === 'npm install entity') {
         await simulateInstall();
       } else if (trimmed === 'help') {
-        addLog('Available commands: npm install freeklaw, help, clear', 'info');
+        addLog('Available commands: npm install entity, help, clear', 'info');
       } else if (trimmed === 'clear') {
         setHistory([]);
       } else {
@@ -203,7 +203,7 @@ export function Terminal({ onComplete }: TerminalProps) {
         addLog('Chat ID set.', 'success');
         addLog('Initializing Agent connection...', 'info');
         await new Promise(r => setTimeout(r, 1500));
-        addLog('Agent "Freeklaw" is now online.', 'success');
+        addLog('Agent "Entity" is now online.', 'success');
         addLog('Redirecting to dashboard...', 'system');
         
         // Save config to backend
@@ -252,7 +252,7 @@ export function Terminal({ onComplete }: TerminalProps) {
             <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
             <div className="w-3 h-3 rounded-full bg-green-500/80" />
           </div>
-          <div className="text-white/50 text-xs font-tech tracking-widest">root@freeklaw:~</div>
+          <div className="text-white/50 text-xs font-tech tracking-widest">root@entity:~</div>
           <TerminalIcon className="w-4 h-4 text-white/30" />
         </div>
 
