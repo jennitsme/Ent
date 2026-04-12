@@ -1,13 +1,12 @@
-import fs from 'fs';
-import path from 'path';
-
-const DATA_FILE = path.resolve(process.cwd(), 'data.json');
+import { randomUUID } from 'crypto';
+import { db } from './db';
 
 export interface AppConfig {
   apiKey: string;
   botToken: string;
   chatId: string;
   provider: string;
+  authToken: string;
 }
 
 export interface LogEntry {
@@ -16,85 +15,65 @@ export interface LogEntry {
   type: 'info' | 'success' | 'warning' | 'error' | 'system';
 }
 
-interface StoreData {
-  config: AppConfig;
-  logs: LogEntry[];
-  skills: { id: string; status: 'active' | 'inactive' }[];
+interface SkillRecord {
+  id: string;
+  status: 'active' | 'inactive';
 }
 
-const defaultData: StoreData = {
-  config: { apiKey: '', botToken: '', chatId: '', provider: 'gemini' },
-  logs: [],
-  skills: [
-    { id: 'web-search', status: 'active' },
-    { id: 'code-interpreter', status: 'active' },
-    { id: 'image-gen', status: 'inactive' },
-    { id: 'telegram-handler', status: 'active' },
-  ],
-};
-
 class Store {
-  private data: StoreData;
-
-  constructor() {
-    this.data = { ...defaultData };
-    this.load();
+  getConfig(): AppConfig {
+    const row = db.prepare('SELECT apiKey, botToken, chatId, provider, authToken FROM config WHERE id = 1').get();
+    return row as AppConfig;
   }
 
-  private load() {
-    try {
-      if (fs.existsSync(DATA_FILE)) {
-        const fileContent = fs.readFileSync(DATA_FILE, 'utf-8');
-        this.data = { ...defaultData, ...JSON.parse(fileContent) };
-      }
-    } catch (error) {
-      console.error('Failed to load data:', error);
-    }
+  setConfig(config: Partial<AppConfig>) {
+    const existing = this.getConfig();
+    const authToken = config.authToken || existing.authToken || randomUUID();
+    db.prepare(
+      `UPDATE config SET apiKey = @apiKey, botToken = @botToken, chatId = @chatId, provider = @provider, authToken = @authToken WHERE id = 1`
+    ).run({
+      apiKey: config.apiKey ?? existing.apiKey,
+      botToken: config.botToken ?? existing.botToken,
+      chatId: config.chatId ?? existing.chatId,
+      provider: config.provider ?? existing.provider,
+      authToken,
+    });
+    return this.getConfig();
   }
 
-  private save() {
-    try {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(this.data, null, 2));
-    } catch (error) {
-      console.error('Failed to save data:', error);
-    }
-  }
-
-  getConfig() {
-    return this.data.config;
-  }
-
-  setConfig(config: AppConfig) {
-    this.data.config = config;
-    this.save();
-  }
-
-  getLogs() {
-    return this.data.logs;
+  getLogs(limit = 50): LogEntry[] {
+    return db
+      .prepare('SELECT timestamp, message, type FROM logs ORDER BY id DESC LIMIT ?')
+      .all(limit) as LogEntry[];
   }
 
   addLog(message: string, type: LogEntry['type'] = 'info') {
-    const entry: LogEntry = {
-      timestamp: new Date().toLocaleTimeString(),
-      message,
-      type,
-    };
-    this.data.logs = [entry, ...this.data.logs].slice(0, 50); // Keep last 50 logs
-    this.save();
+    const timestamp = new Date().toLocaleTimeString();
+    db.prepare('INSERT INTO logs (timestamp, message, type) VALUES (?, ?, ?)').run(timestamp, message, type);
+    return { timestamp, message, type } satisfies LogEntry;
   }
 
-  getSkills() {
-    return this.data.skills;
+  getSkills(): SkillRecord[] {
+    return db.prepare('SELECT id, status FROM skills').all() as SkillRecord[];
   }
 
   toggleSkill(id: string) {
-    const skill = this.data.skills.find((s) => s.id === id);
-    if (skill) {
-      skill.status = skill.status === 'active' ? 'inactive' : 'active';
-      this.save();
-      return skill;
-    }
-    return null;
+    const skill = db.prepare('SELECT id, status FROM skills WHERE id = ?').get(id) as SkillRecord | undefined;
+    if (!skill) return null;
+    const next = skill.status === 'active' ? 'inactive' : 'active';
+    db.prepare('UPDATE skills SET status = ? WHERE id = ?').run(next, id);
+    return { ...skill, status: next } as SkillRecord;
+  }
+
+  setCronStatus(id: string, name: string, schedule: string, status: string, lastRun?: string) {
+    db.prepare(
+      `INSERT INTO cron_jobs (id, name, schedule, status, lastRun) VALUES (@id, @name, @schedule, @status, @lastRun)
+       ON CONFLICT(id) DO UPDATE SET status = excluded.status, lastRun = excluded.lastRun`
+    ).run({ id, name, schedule, status, lastRun: lastRun ?? 'Never' });
+  }
+
+  getCronStatuses() {
+    return db.prepare('SELECT id, name, schedule, lastRun, status FROM cron_jobs').all();
   }
 }
 

@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Terminal as TerminalIcon, ShieldCheck, Cpu, CheckCircle, AlertCircle } from 'lucide-react';
+import { Terminal as TerminalIcon } from 'lucide-react';
+
+type Config = { apiKey: string; botToken: string; chatId: string; provider: string; authToken: string };
 
 interface TerminalProps {
-  onComplete: (config: { apiKey: string; botToken: string; chatId: string; provider: string }) => void;
+  onComplete: (config: Config) => void;
 }
 
 type Step = 'IDLE' | 'INSTALLING' | 'SELECT_PROVIDER' | 'CONFIG_API' | 'CONFIG_BOT_TOKEN' | 'CONFIG_CHAT_ID' | 'COMPLETE';
@@ -22,7 +24,7 @@ export function Terminal({ onComplete }: TerminalProps) {
   ]);
   const [input, setInput] = useState('');
   const [step, setStep] = useState<Step>('IDLE');
-  const [config, setConfig] = useState({ apiKey: '', botToken: '', chatId: '', provider: 'gemini' });
+  const [config, setConfig] = useState<Config>({ apiKey: '', botToken: '', chatId: '', provider: 'gemini', authToken: '' });
   const [isFocused, setIsFocused] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -206,21 +208,22 @@ export function Terminal({ onComplete }: TerminalProps) {
         addLog('Agent "Entity" is now online.', 'success');
         addLog('Redirecting to dashboard...', 'system');
         
-        // Save config to backend
         try {
-          await fetch('/api/config', {
+          const res = await fetch('/api/config', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(finalConfig),
           });
+          const data = await res.json();
+          const authToken = data.authToken || '';
           addLog('Configuration saved to server.', 'success');
+          const withAuth: Config = { ...finalConfig, authToken };
+          await new Promise(r => setTimeout(r, 2000));
+          setStep('COMPLETE');
+          onComplete(withAuth);
         } catch (error) {
           addLog('Failed to save configuration to server.', 'error');
         }
-
-        await new Promise(r => setTimeout(r, 2000));
-        setStep('COMPLETE');
-        onComplete(finalConfig);
       } else {
         addLog('Invalid Chat ID.', 'error');
       }

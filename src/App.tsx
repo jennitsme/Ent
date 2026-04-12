@@ -5,31 +5,38 @@ import { LandingPage } from '@/components/LandingPage';
 import { GlitchText } from '@/components/GlitchText';
 import { motion, AnimatePresence } from 'framer-motion';
 
+type Config = { apiKey: string; botToken: string; chatId: string; provider: string; authToken: string };
+
 export default function App() {
   const [view, setView] = useState<'landing' | 'terminal' | 'dashboard'>('landing');
-  const [config, setConfig] = useState({ apiKey: '', botToken: '', chatId: '', provider: 'gemini' });
+  const [config, setConfig] = useState<Config>({ apiKey: '', botToken: '', chatId: '', provider: 'gemini', authToken: '' });
 
   useEffect(() => {
-    // Check if already configured
-    fetch('/api/status')
-      .then(res => res.json())
-      .then(data => {
+    const storedToken = localStorage.getItem('entity_auth_token') || '';
+    const fetchStatus = async () => {
+      try {
+        const res = await fetch('/api/status', {
+          headers: storedToken ? { Authorization: `Bearer ${storedToken}` } : undefined,
+        });
+        if (!res.ok) return;
+        const data = await res.json();
         if (data.config && data.config.apiKey && data.config.botToken) {
-          setConfig(data.config);
-          // setView('dashboard'); // Removed auto-redirect
+          setConfig({ ...data.config, authToken: storedToken });
         }
-      })
-      .catch(() => {
-        // Ignore error, stay on landing
-      });
+      } catch (err) {
+        // ignore
+      }
+    };
+    fetchStatus();
   }, []);
 
   const handleStart = () => {
     setView('terminal');
   };
 
-  const handleTerminalComplete = (newConfig: { apiKey: string; botToken: string; chatId: string; provider: string }) => {
+  const handleTerminalComplete = (newConfig: Config) => {
     setConfig(newConfig);
+    localStorage.setItem('entity_auth_token', newConfig.authToken || '');
     setTimeout(() => {
       setView('dashboard');
     }, 1000);
@@ -37,7 +44,8 @@ export default function App() {
 
   const handleLogout = () => {
     setView('landing');
-    setConfig({ apiKey: '', botToken: '', chatId: '', provider: 'gemini' });
+    setConfig({ apiKey: '', botToken: '', chatId: '', provider: 'gemini', authToken: '' });
+    localStorage.removeItem('entity_auth_token');
   };
 
   return (

@@ -4,7 +4,7 @@ import { Shield, Zap, Clock, Terminal, Activity, MessageSquare, Settings, LogOut
 import { cn } from '@/lib/utils';
 
 interface DashboardProps {
-  config: { apiKey: string; botToken: string; chatId: string; provider: string };
+  config: { apiKey: string; botToken: string; chatId: string; provider: string; authToken: string };
   onLogout: () => void;
 }
 
@@ -25,13 +25,16 @@ export function Dashboard({ config, onLogout }: DashboardProps) {
   // Fetch real status from backend
   useEffect(() => {
     const fetchStatus = async () => {
+      if (!config.authToken) return;
       try {
-        const res = await fetch('/api/status');
+        const res = await fetch('/api/status', {
+          headers: { Authorization: `Bearer ${config.authToken}` },
+        });
+        if (!res.ok) return;
         const data = await res.json();
         setLogs(data.logs.map((l: any) => `[${l.timestamp}] ${l.message}`));
         setCronJobs(data.cronJobs || []);
         
-        // Merge backend skills with frontend descriptions
         const skillDescriptions: Record<string, { name: string; desc: string }> = {
           'web-search': { name: 'Web Search', desc: 'Allows the agent to search the internet for real-time info.' },
           'code-interpreter': { name: 'Code Interpreter', desc: 'Executes Python code for data analysis.' },
@@ -52,13 +55,13 @@ export function Dashboard({ config, onLogout }: DashboardProps) {
     fetchStatus();
     const interval = setInterval(fetchStatus, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [config.authToken]);
 
   const toggleSkill = async (id: string) => {
     try {
       const res = await fetch('/api/skills/toggle', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${config.authToken}` },
         body: JSON.stringify({ id }),
       });
       
@@ -72,7 +75,6 @@ export function Dashboard({ config, onLogout }: DashboardProps) {
           type: newStatus === 'active' ? 'success' : 'info'
         });
         
-        // Optimistic update
         setSkills(prev => prev.map(s => s.id === id ? { ...s, status: newStatus } : s));
       }
     } catch (error) {
@@ -162,12 +164,12 @@ export function Dashboard({ config, onLogout }: DashboardProps) {
               <div>
                 <div className="text-white/40 mb-1">Telegram Bot Token</div>
                 <div className="font-mono text-neon-purple truncate">
-                  {config.botToken.substring(0, 8)}...{config.botToken.substring(config.botToken.length - 4)}
+                  {config.botToken ? `${config.botToken.substring(0, 8)}...${config.botToken.substring(config.botToken.length - 4)}` : 'N/A'}
                 </div>
               </div>
               <div>
                 <div className="text-white/40 mb-1">Chat ID</div>
-                <div className="font-mono text-neon-green">{config.chatId}</div>
+                <div className="font-mono text-neon-green">{config.chatId || 'N/A'}</div>
               </div>
               <div>
                 <div className="text-white/40 mb-1">AI Provider</div>
@@ -177,8 +179,12 @@ export function Dashboard({ config, onLogout }: DashboardProps) {
                 <div className="text-white/40 mb-1">API Key Status</div>
                 <div className="flex items-center gap-2 text-neon-green">
                   <Shield className="w-3 h-3" />
-                  SECURE & ACTIVE
+                  {config.apiKey ? 'SECURE & ACTIVE' : 'MISSING'}
                 </div>
+              </div>
+              <div>
+                <div className="text-white/40 mb-1">Auth Token</div>
+                <div className="font-mono text-neon-cyan truncate">{config.authToken || 'N/A'}</div>
               </div>
             </div>
           </div>

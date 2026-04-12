@@ -5,15 +5,16 @@ import { store } from './src/server/store';
 import { telegramService } from './src/server/services/TelegramService';
 import { agentService } from './src/server/services/AgentService';
 import { cronService } from './src/server/services/CronService';
+import { authGuard } from './src/server/middleware/auth';
 
-async function startServer() {
+export async function buildApp() {
   const app = express();
-  const PORT = 5000;
+  const PORT = process.env.PORT || 5000;
 
   app.use(express.json());
 
   // API Routes
-  app.get('/api/status', (req, res) => {
+  app.get('/api/status', authGuard, (req, res) => {
     res.json({
       config: store.getConfig(),
       logs: store.getLogs(),
@@ -22,20 +23,19 @@ async function startServer() {
     });
   });
 
-  app.post('/api/config', (req, res) => {
-    const { apiKey, botToken, chatId, provider } = req.body;
-    store.setConfig({ apiKey, botToken, chatId, provider });
+  app.post('/api/config', authGuard, (req, res) => {
+    const { apiKey, botToken, chatId, provider, authToken } = req.body;
+    const updated = store.setConfig({ apiKey, botToken, chatId, provider, authToken });
     
-    // Re-initialize services with new config
     telegramService.stop();
     telegramService.initialize();
     agentService.initialize();
     cronService.initialize();
 
-    res.json({ success: true, message: 'Configuration saved and services restarted' });
+    res.json({ success: true, message: 'Configuration saved and services restarted', authToken: updated.authToken });
   });
 
-  app.post('/api/skills/toggle', (req, res) => {
+  app.post('/api/skills/toggle', authGuard, (req, res) => {
     const { id } = req.body;
     const skill = store.toggleSkill(id);
     if (skill) {
@@ -59,15 +59,19 @@ async function startServer() {
     });
   } else {
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, allowedHosts: true },
       appType: 'spa',
     });
     app.use(vite.middlewares);
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
+
+  return { app, server };
 }
 
-startServer();
+if (!process.env.ENTITY_NO_AUTOSTART) {
+  buildApp();
+}
