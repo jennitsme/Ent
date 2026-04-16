@@ -242,8 +242,8 @@ export function Terminal({ onComplete }: TerminalProps) {
       <motion.div 
         className="relative bg-black/80 rounded-lg overflow-hidden backdrop-blur-md font-mono text-sm md:text-base h-[600px] flex flex-col border"
         animate={{
-          borderColor: isFocused ? 'rgba(0, 243, 255, 0.8)' : 'rgba(0, 243, 255, 0.3)',
-          boxShadow: isFocused ? '0 0 25px rgba(0, 243, 255, 0.25)' : '0 0 10px rgba(0, 243, 255, 0.05)',
+          borderColor: isFocused ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.25)',
+          boxShadow: isFocused ? '0 0 25px rgba(255, 255, 255, 0.16)' : '0 0 10px rgba(255, 255, 255, 0.06)',
         }}
         transition={{ duration: 0.3 }}
         onClick={handleContainerClick}
@@ -262,7 +262,7 @@ export function Terminal({ onComplete }: TerminalProps) {
         {/* Terminal Body */}
         <div 
           ref={scrollRef}
-          className="flex-1 p-4 overflow-y-auto space-y-1 scrollbar-thin scrollbar-thumb-neon-cyan/20 scrollbar-track-transparent"
+          className="flex-1 p-4 overflow-y-auto space-y-1 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent"
         >
           <AnimatePresence>
             {history.map((line) => (
@@ -273,9 +273,9 @@ export function Terminal({ onComplete }: TerminalProps) {
                 className={cn(
                   "break-all whitespace-pre-wrap font-mono",
                   line.type === 'error' && "text-red-500",
-                  line.type === 'success' && "text-neon-green",
-                  line.type === 'warning' && "text-yellow-400",
-                  line.type === 'system' && "text-neon-cyan font-bold",
+                  line.type === 'success' && "text-white",
+                  line.type === 'warning' && "text-zinc-300",
+                  line.type === 'system' && "text-white font-bold",
                   line.type === 'input' && "text-white/80",
                   line.type === 'info' && "text-gray-300"
                 )}
@@ -289,12 +289,12 @@ export function Terminal({ onComplete }: TerminalProps) {
           {/* Input Line */}
           {step !== 'INSTALLING' && step !== 'COMPLETE' && (
             <motion.div 
-              className="flex items-center gap-2 text-neon-cyan mt-2"
+              className="flex items-center gap-2 text-white mt-2"
               animate={{ x: isTyping ? [0, 1, 0] : 0 }}
               transition={{ duration: 0.05 }}
             >
-              <span className="text-neon-green">➜</span>
-              <span className="text-neon-cyan">~</span>
+              <span className="text-white">➜</span>
+              <span className="text-white/80">~</span>
               <input
                 ref={inputRef}
                 type={step.startsWith('CONFIG') && step !== 'CONFIG_CHAT_ID' ? "password" : "text"}
@@ -305,7 +305,7 @@ export function Terminal({ onComplete }: TerminalProps) {
                 onBlur={() => setIsFocused(false)}
                 className={cn(
                   "flex-1 bg-transparent border-none outline-none font-mono placeholder-white/20 transition-all duration-75",
-                  isTyping ? "text-neon-green drop-shadow-[0_0_2px_rgba(0,255,157,0.8)]" : "text-white"
+                  isTyping ? "text-white drop-shadow-[0_0_2px_rgba(255,255,255,0.55)]" : "text-white"
                 )}
                 autoFocus
                 autoComplete="off"
@@ -316,7 +316,7 @@ export function Terminal({ onComplete }: TerminalProps) {
              <motion.div 
                animate={{ opacity: [0, 1, 0] }} 
                transition={{ repeat: Infinity, duration: 0.8 }}
-               className="w-2 h-4 bg-neon-green inline-block mt-2"
+               className="w-2 h-4 bg-white inline-block mt-2"
              />
           )}
         </div>
