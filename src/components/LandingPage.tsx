@@ -14,10 +14,10 @@ const sectionVariants = {
 
 export function LandingPage({ onStart }: LandingPageProps) {
   return (
-    <div className="min-h-screen bg-dark-bg text-white font-mono relative overflow-hidden selection:bg-neon-red/30">
+    <div className="min-h-screen bg-dark-bg text-white font-mono relative overflow-hidden selection:bg-white/20">
       <div className="absolute inset-0 grid grid-cols-[repeat(40,1fr)] grid-rows-[repeat(40,1fr)] opacity-[0.03] pointer-events-none">
         {Array.from({ length: 1600 }).map((_, i) => (
-          <div key={i} className="border border-neon-red/20" />
+          <div key={i} className="border border-white/10" />
         ))}
       </div>
 
@@ -25,27 +25,27 @@ export function LandingPage({ onStart }: LandingPageProps) {
 
       <nav className="relative z-50 flex justify-between items-center px-6 py-6 md:px-12 border-b border-white/5 backdrop-blur-sm sticky top-0 bg-dark-bg/80">
         <div className="flex items-center gap-3 group cursor-pointer">
-          <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden group-hover:shadow-[0_0_25px_rgba(255,0,60,0.6)] transition-all duration-300">
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden group-hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all duration-300">
             <img src="/logo.png" alt="ENTITY" className="w-10 h-10 object-cover group-hover:scale-110 transition-transform" />
           </div>
-          <h1 className="text-2xl font-display font-bold tracking-wider text-white group-hover:text-neon-red transition-colors">
+          <h1 className="text-2xl font-display font-bold tracking-wider text-white group-hover:text-white transition-colors">
             ENTITY
           </h1>
         </div>
         <div className="hidden md:flex items-center gap-8">
-          <a href="#features" className="text-sm text-white/50 hover:text-neon-red transition-colors tracking-wider uppercase">Features</a>
-          <a href="#how-it-works" className="text-sm text-white/50 hover:text-neon-red transition-colors tracking-wider uppercase">How It Works</a>
-          <a href="#about" className="text-sm text-white/50 hover:text-neon-red transition-colors tracking-wider uppercase">About</a>
-          <a href="#vision" className="text-sm text-white/50 hover:text-neon-red transition-colors tracking-wider uppercase">Vision</a>
-          <a href="https://x.com/EntityOS" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-neon-red transition-colors" title="Follow us on X">
+          <a href="#features" className="text-sm text-white/50 hover:text-white transition-colors tracking-wider uppercase">Features</a>
+          <a href="#how-it-works" className="text-sm text-white/50 hover:text-white transition-colors tracking-wider uppercase">How It Works</a>
+          <a href="#about" className="text-sm text-white/50 hover:text-white transition-colors tracking-wider uppercase">About</a>
+          <a href="#vision" className="text-sm text-white/50 hover:text-white transition-colors tracking-wider uppercase">Vision</a>
+          <a href="https://x.com/EntityOS" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors" title="Follow us on X">
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
-          <a href="https://github.com/jennitsme/Ent" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-neon-red transition-colors" title="GitHub">
+          <a href="https://github.com/jennitsme/Ent" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition-colors" title="GitHub">
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           </a>
           <button
             onClick={onStart}
-            className="flex items-center gap-2 px-6 py-2 bg-neon-red/10 border border-neon-red/50 text-neon-red hover:bg-neon-red hover:text-black transition-all duration-300 font-bold tracking-wider rounded-sm group"
+            className="flex items-center gap-2 px-6 py-2 bg-white/5 border border-white/30 text-white hover:bg-white hover:text-black transition-all duration-300 font-bold tracking-wider rounded-sm group"
           >
             INITIALIZE SYSTEM
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -62,30 +62,30 @@ export function LandingPage({ onStart }: LandingPageProps) {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="space-y-8"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-red/5 border border-neon-red/20 text-neon-red text-xs font-bold tracking-widest uppercase">
-              <span className="w-2 h-2 rounded-full bg-neon-red animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-red/5 border border-white/10 text-neon-red text-xs font-bold tracking-widest uppercase">
+              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
               System v2.0 Online
             </div>
 
             <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight">
               NEXT GEN <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-red via-red-500 to-orange-500 animate-pulse">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-white">
                 AI AGENT
               </span> <br />
               FRAMEWORK
             </h1>
 
-            <p className="text-lg text-white/60 max-w-xl leading-relaxed border-l-2 border-neon-red/30 pl-6">
+            <p className="text-lg text-white/60 max-w-xl leading-relaxed border-l-2 border-white/20 pl-6">
               Deploy autonomous agents with advanced capabilities.
               Integrated with Gemini, Telegram, and real-time web search.
               Secure, scalable, and ready for mission-critical tasks.
             </p>
 
-            <div className="bg-white/[0.03] border border-white/10 rounded-lg p-4 max-w-xl hover:border-neon-red/30 transition-all duration-300">
+            <div className="bg-white/[0.03] border border-white/10 rounded-lg p-4 max-w-xl hover:border-white/20 transition-all duration-300">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-bold text-neon-red tracking-widest uppercase">Contract Address</span>
+                <span className="text-xs font-bold text-white tracking-widest uppercase">Contract Address</span>
               </div>
-              <p className="text-sm text-white/70 font-mono break-all select-all cursor-pointer hover:text-neon-red transition-colors" onClick={() => navigator.clipboard.writeText('8KkmpsPChG63QmkAhUo2UNQjnSSbNzQqggGPnHN8pump')} title="Click to copy">
+              <p className="text-sm text-white/70 font-mono break-all select-all cursor-pointer hover:text-white transition-colors" onClick={() => navigator.clipboard.writeText('8KkmpsPChG63QmkAhUo2UNQjnSSbNzQqggGPnHN8pump')} title="Click to copy">
                 8KkmpsPChG63QmkAhUo2UNQjnSSbNzQqggGPnHN8pump
               </p>
             </div>
@@ -93,14 +93,14 @@ export function LandingPage({ onStart }: LandingPageProps) {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button
                 onClick={onStart}
-                className="px-8 py-4 bg-neon-red text-black font-bold text-lg tracking-wider hover:bg-white hover:text-black transition-all duration-300 shadow-[0_0_20px_rgba(255,0,60,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+                className="px-8 py-4 bg-white text-black font-bold text-lg tracking-wider hover:bg-zinc-200 hover:text-black transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.18)] hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
                 style={{ clipPath: 'polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%)' }}
               >
                 DEPLOY AGENT
               </button>
               <a
                 href="#how-it-works"
-                className="px-8 py-4 bg-transparent border border-white/20 text-white font-bold text-lg tracking-wider hover:border-neon-red hover:text-neon-red transition-all duration-300 text-center"
+                className="px-8 py-4 bg-transparent border border-white/20 text-white font-bold text-lg tracking-wider hover:border-white hover:text-white transition-all duration-300 text-center"
               >
                 LEARN MORE
               </a>
@@ -116,42 +116,42 @@ export function LandingPage({ onStart }: LandingPageProps) {
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[400px] h-[400px] border border-neon-red/20 rounded-full border-dashed"
+              className="absolute w-[400px] h-[400px] border border-white/10 rounded-full border-dashed"
             />
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[300px] h-[300px] border border-neon-red/40 rounded-full border-dotted"
+              className="absolute w-[300px] h-[300px] border border-white/20 rounded-full border-dotted"
             />
             <motion.div
               animate={{ rotate: 180 }}
               transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[200px] h-[200px] border-2 border-neon-red/60 rounded-full border-t-transparent border-l-transparent"
+              className="absolute w-[200px] h-[200px] border-2 border-white/35 rounded-full border-t-transparent border-l-transparent"
             />
-            <div className="relative z-10 w-32 h-32 bg-black border border-neon-red rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(255,0,60,0.5)]">
-              <Cpu className="w-16 h-16 text-neon-red animate-pulse" />
+            <div className="relative z-10 w-32 h-32 bg-black border border-white rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.12)]">
+              <Cpu className="w-16 h-16 text-white animate-pulse" />
             </div>
             <motion.div
               animate={{ y: [0, -20, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-10 right-10 bg-black/80 backdrop-blur-md border border-neon-red/30 p-4 rounded-lg shadow-lg max-w-[200px]"
+              className="absolute top-10 right-10 bg-black/80 backdrop-blur-md border border-white/15 p-4 rounded-lg shadow-lg max-w-[200px]"
             >
               <div className="flex items-center gap-2 mb-2">
                 <Shield className="w-4 h-4 text-neon-red" />
-                <span className="text-xs font-bold text-neon-red">SECURE CORE</span>
+                <span className="text-xs font-bold text-white">SECURE CORE</span>
               </div>
               <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                <div className="h-full bg-neon-red w-[80%]" />
+                <div className="h-full bg-white w-[80%]" />
               </div>
             </motion.div>
             <motion.div
               animate={{ y: [0, 20, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute bottom-20 left-0 bg-black/80 backdrop-blur-md border border-neon-red/30 p-4 rounded-lg shadow-lg max-w-[200px]"
+              className="absolute bottom-20 left-0 bg-black/80 backdrop-blur-md border border-white/15 p-4 rounded-lg shadow-lg max-w-[200px]"
             >
               <div className="flex items-center gap-2 mb-2">
                 <Zap className="w-4 h-4 text-neon-red" />
-                <span className="text-xs font-bold text-neon-red">HIGH PERFORMANCE</span>
+                <span className="text-xs font-bold text-white">HIGH PERFORMANCE</span>
               </div>
               <div className="text-xs text-white/60">Latency: 12ms</div>
             </motion.div>
@@ -169,7 +169,7 @@ export function LandingPage({ onStart }: LandingPageProps) {
             variants={sectionVariants}
             className="text-center mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-red/5 border border-neon-red/20 text-neon-red text-xs font-bold tracking-widest uppercase mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-red/5 border border-white/10 text-neon-red text-xs font-bold tracking-widest uppercase mb-4">
               <Sparkles className="w-3 h-3" />
               Core Capabilities
             </div>
@@ -196,15 +196,15 @@ export function LandingPage({ onStart }: LandingPageProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group relative bg-white/[0.02] border border-white/10 p-8 hover:bg-neon-red/5 hover:border-neon-red/50 transition-all duration-300 cursor-default overflow-hidden"
+                className="group relative bg-white/[0.02] border border-white/10 p-8 hover:bg-white/[0.04] hover:border-white/30 transition-all duration-300 cursor-default overflow-hidden"
               >
                 <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity transform group-hover:scale-150 duration-500">
-                  <feature.icon className="w-24 h-24 text-neon-red" />
+                  <feature.icon className="w-24 h-24 text-white/60" />
                 </div>
-                <div className="w-12 h-12 bg-black border border-neon-red/30 rounded-lg flex items-center justify-center mb-6 group-hover:border-neon-red group-hover:shadow-[0_0_15px_rgba(255,0,60,0.4)] transition-all">
-                  <feature.icon className="w-6 h-6 text-white group-hover:text-neon-red transition-colors" />
+                <div className="w-12 h-12 bg-black border border-white/15 rounded-lg flex items-center justify-center mb-6 group-hover:border-white group-hover:shadow-[0_0_15px_rgba(255,255,255,0.16)] transition-all">
+                  <feature.icon className="w-6 h-6 text-white group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="text-xl font-display font-bold mb-3 group-hover:text-neon-red transition-colors">{feature.title}</h3>
+                <h3 className="text-xl font-display font-bold mb-3 group-hover:text-white transition-colors">{feature.title}</h3>
                 <p className="text-white/50 leading-relaxed group-hover:text-white/70 transition-colors">{feature.desc}</p>
               </motion.div>
             ))}
@@ -222,7 +222,7 @@ export function LandingPage({ onStart }: LandingPageProps) {
             variants={sectionVariants}
             className="text-center mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-red/5 border border-neon-red/20 text-neon-red text-xs font-bold tracking-widest uppercase mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-red/5 border border-white/10 text-neon-red text-xs font-bold tracking-widest uppercase mb-4">
               <Settings className="w-3 h-3" />
               Process
             </div>
@@ -235,7 +235,7 @@ export function LandingPage({ onStart }: LandingPageProps) {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon-red/30 to-transparent -translate-y-1/2" />
+            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-y-1/2" />
 
             {[
               {
@@ -263,15 +263,15 @@ export function LandingPage({ onStart }: LandingPageProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.2 }}
-                className="relative bg-black/60 border border-white/10 p-8 text-center group hover:border-neon-red/40 transition-all duration-300"
+                className="relative bg-black/60 border border-white/10 p-8 text-center group hover:border-white/25 transition-all duration-300"
               >
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-dark-bg border-2 border-neon-red rounded-full flex items-center justify-center z-10 shadow-[0_0_20px_rgba(255,0,60,0.4)]">
-                  <span className="text-neon-red font-display font-bold text-sm">{item.step}</span>
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-dark-bg border-2 border-white rounded-full flex items-center justify-center z-10 shadow-[0_0_20px_rgba(255,0,60,0.4)]">
+                  <span className="text-white font-display font-bold text-sm">{item.step}</span>
                 </div>
-                <div className="w-16 h-16 bg-neon-red/5 border border-neon-red/20 rounded-full flex items-center justify-center mx-auto mt-4 mb-6 group-hover:border-neon-red/60 group-hover:shadow-[0_0_25px_rgba(255,0,60,0.3)] transition-all duration-300">
-                  <item.icon className="w-8 h-8 text-neon-red/70 group-hover:text-neon-red transition-colors" />
+                <div className="w-16 h-16 bg-neon-red/5 border border-white/10 rounded-full flex items-center justify-center mx-auto mt-4 mb-6 group-hover:border-neon-red/60 group-hover:shadow-[0_0_25px_rgba(255,0,60,0.3)] transition-all duration-300">
+                  <item.icon className="w-8 h-8 text-neon-red/70 group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="text-xl font-display font-bold mb-3 text-white group-hover:text-neon-red transition-colors">{item.title}</h3>
+                <h3 className="text-xl font-display font-bold mb-3 text-white group-hover:text-white transition-colors">{item.title}</h3>
                 <p className="text-white/50 leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
@@ -289,7 +289,7 @@ export function LandingPage({ onStart }: LandingPageProps) {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-red/5 border border-neon-red/20 text-neon-red text-xs font-bold tracking-widest uppercase mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-red/5 border border-white/10 text-neon-red text-xs font-bold tracking-widest uppercase mb-4">
                 <Eye className="w-3 h-3" />
                 About Us
               </div>
@@ -324,9 +324,9 @@ export function LandingPage({ onStart }: LandingPageProps) {
               ].map((stat, i) => (
                 <div
                   key={i}
-                  className="bg-white/[0.02] border border-white/10 p-6 text-center hover:border-neon-red/30 transition-all duration-300"
+                  className="bg-white/[0.02] border border-white/10 p-6 text-center hover:border-white/20 transition-all duration-300"
                 >
-                  <div className="text-3xl md:text-4xl font-display font-bold text-neon-red mb-2">{stat.value}</div>
+                  <div className="text-3xl md:text-4xl font-display font-bold text-white mb-2">{stat.value}</div>
                   <div className="text-sm text-white/40 uppercase tracking-wider">{stat.label}</div>
                 </div>
               ))}
@@ -345,7 +345,7 @@ export function LandingPage({ onStart }: LandingPageProps) {
             variants={sectionVariants}
             className="text-center mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-red/5 border border-neon-red/20 text-neon-red text-xs font-bold tracking-widest uppercase mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-red/5 border border-white/10 text-neon-red text-xs font-bold tracking-widest uppercase mb-4">
               <Target className="w-3 h-3" />
               Purpose
             </div>
@@ -360,12 +360,12 @@ export function LandingPage({ onStart }: LandingPageProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="relative bg-white/[0.02] border border-white/10 p-10 overflow-hidden group hover:border-neon-red/40 transition-all duration-300"
+              className="relative bg-white/[0.02] border border-white/10 p-10 overflow-hidden group hover:border-white/25 transition-all duration-300"
             >
-              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-neon-red via-neon-red/50 to-transparent" />
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-neon-red/5 rounded-full blur-3xl group-hover:bg-neon-red/10 transition-colors duration-500" />
-              <div className="w-14 h-14 bg-neon-red/10 border border-neon-red/30 rounded-lg flex items-center justify-center mb-6">
-                <Eye className="w-7 h-7 text-neon-red" />
+              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-white via-white/40 to-transparent" />
+              <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-colors duration-500" />
+              <div className="w-14 h-14 bg-white/5 border border-white/15 rounded-lg flex items-center justify-center mb-6">
+                <Eye className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-2xl font-display font-bold mb-4 text-white">OUR VISION</h3>
               <p className="text-white/60 leading-relaxed text-lg">
@@ -378,12 +378,12 @@ export function LandingPage({ onStart }: LandingPageProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="relative bg-white/[0.02] border border-white/10 p-10 overflow-hidden group hover:border-neon-red/40 transition-all duration-300"
+              className="relative bg-white/[0.02] border border-white/10 p-10 overflow-hidden group hover:border-white/25 transition-all duration-300"
             >
-              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-neon-red via-neon-red/50 to-transparent" />
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-neon-red/5 rounded-full blur-3xl group-hover:bg-neon-red/10 transition-colors duration-500" />
-              <div className="w-14 h-14 bg-neon-red/10 border border-neon-red/30 rounded-lg flex items-center justify-center mb-6">
-                <Target className="w-7 h-7 text-neon-red" />
+              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-white via-white/40 to-transparent" />
+              <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-colors duration-500" />
+              <div className="w-14 h-14 bg-white/5 border border-white/15 rounded-lg flex items-center justify-center mb-6">
+                <Target className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-2xl font-display font-bold mb-4 text-white">OUR MISSION</h3>
               <p className="text-white/60 leading-relaxed text-lg">
@@ -406,10 +406,10 @@ export function LandingPage({ onStart }: LandingPageProps) {
             ].map((value, i) => (
               <div
                 key={i}
-                className="flex items-start gap-4 p-6 bg-white/[0.02] border border-white/5 hover:border-neon-red/20 transition-all duration-300"
+                className="flex items-start gap-4 p-6 bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all duration-300"
               >
-                <div className="w-10 h-10 bg-neon-red/10 border border-neon-red/30 rounded-lg flex items-center justify-center shrink-0">
-                  <value.icon className="w-5 h-5 text-neon-red" />
+                <div className="w-10 h-10 bg-white/5 border border-white/15 rounded-lg flex items-center justify-center shrink-0">
+                  <value.icon className="w-5 h-5 text-white" />
                 </div>
                 <div>
                   <h4 className="font-display font-bold mb-1 text-white">{value.title}</h4>
@@ -438,7 +438,7 @@ export function LandingPage({ onStart }: LandingPageProps) {
             </p>
             <button
               onClick={onStart}
-              className="inline-flex items-center gap-3 px-10 py-5 bg-neon-red text-black font-bold text-lg tracking-wider hover:bg-white transition-all duration-300 shadow-[0_0_30px_rgba(255,0,60,0.4)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] group"
+              className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-bold text-lg tracking-wider hover:bg-zinc-200 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.18)] hover:shadow-[0_0_40px_rgba(255,255,255,0.24)] group"
               style={{ clipPath: 'polygon(0 0, 100% 0, 100% 80%, 96% 100%, 0 100%)' }}
             >
               INITIALIZE SYSTEM
@@ -463,11 +463,11 @@ export function LandingPage({ onStart }: LandingPageProps) {
                 Next generation AI agent framework. Deploy autonomous intelligence with confidence.
               </p>
               <div className="flex items-center gap-4">
-                <a href="https://x.com/EntityOS" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-white/30 hover:text-neon-red transition-colors">
+                <a href="https://x.com/EntityOS" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-white/30 hover:text-white transition-colors">
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                   @EntityOS
                 </a>
-                <a href="https://github.com/jennitsme/Ent" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-white/30 hover:text-neon-red transition-colors">
+                <a href="https://github.com/jennitsme/Ent" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-white/30 hover:text-white transition-colors">
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                   GitHub
                 </a>
@@ -476,10 +476,10 @@ export function LandingPage({ onStart }: LandingPageProps) {
             <div>
               <h4 className="font-display font-bold text-sm tracking-wider mb-4 text-white/60">NAVIGATION</h4>
               <div className="space-y-2">
-                <a href="#features" className="block text-sm text-white/30 hover:text-neon-red transition-colors">Features</a>
-                <a href="#how-it-works" className="block text-sm text-white/30 hover:text-neon-red transition-colors">How It Works</a>
-                <a href="#about" className="block text-sm text-white/30 hover:text-neon-red transition-colors">About</a>
-                <a href="#vision" className="block text-sm text-white/30 hover:text-neon-red transition-colors">Vision & Mission</a>
+                <a href="#features" className="block text-sm text-white/30 hover:text-white transition-colors">Features</a>
+                <a href="#how-it-works" className="block text-sm text-white/30 hover:text-white transition-colors">How It Works</a>
+                <a href="#about" className="block text-sm text-white/30 hover:text-white transition-colors">About</a>
+                <a href="#vision" className="block text-sm text-white/30 hover:text-white transition-colors">Vision & Mission</a>
               </div>
             </div>
             <div>

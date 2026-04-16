@@ -6,13 +6,13 @@
   --font-display: "Orbitron", sans-serif;
   --font-tech: "Share Tech Mono", monospace;
   
-  --color-neon-cyan: #00f3ff;
-  --color-neon-green: #00ff9d;
-  --color-neon-purple: #bc13fe;
-  --color-neon-red: #ff003c;
-  --color-dark-bg: #050505;
+  --color-neon-cyan: #f5f5f5;
+  --color-neon-green: #d4d4d4;
+  --color-neon-purple: #a3a3a3;
+  --color-neon-red: #ffffff;
+  --color-dark-bg: #000000;
   --color-panel-bg: #0a0a0a;
-  --color-grid-line: #1a1a1a;
+  --color-grid-line: #1f1f1f;
 }
 
 body {
@@ -44,15 +44,15 @@ body {
 
 /* Glow Effects */
 .text-glow {
-  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
 }
 
 .text-glow-green {
-  text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
 .border-glow {
-  box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.12);
 }
 
 /* Scrollbar */
