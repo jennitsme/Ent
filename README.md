@@ -210,7 +210,7 @@ Landing Page
    ↓
 Initialize System
    ↓
-Terminal Installer Simulation
+Terminal Installer
    ↓
 Select Provider
    ↓
