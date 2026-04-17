@@ -77,17 +77,26 @@ export function Terminal({ onComplete }: TerminalProps) {
     ];
 
     for (const line of asciiArt) {
-      await wait(75);
+      await wait(55);
       addLog(line, 'system');
     }
 
-    await wait(250);
-    addLog('$ npm install -g entity', 'input');
     await wait(180);
-    addLog('npm notice', 'warning');
+    addLog('$ npm install -g entity --verbose', 'input');
+    await wait(120);
+    addLog('npm verb cli /usr/local/bin/node /usr/local/bin/npm', 'info');
+    await wait(70);
+    addLog('npm info using npm@10.9.2', 'info');
+    await wait(70);
+    addLog('npm info using node@v22.14.0', 'info');
+    await wait(90);
+    addLog('npm verb title npm install entity', 'info');
+    await wait(70);
+    addLog('npm verb argv "install" "--global" "entity" "--verbose"', 'info');
+    await wait(120);
 
     const installFrames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
-    const spinStage = async (messages: string[], loops: number, delay = 90) => {
+    const spinStage = async (messages: string[], loops: number, delay = 85) => {
       const id = addLog(`${installFrames[0]} ${messages[0]}`, 'info', true);
       for (let i = 0; i < loops; i++) {
         const frame = installFrames[i % installFrames.length];
@@ -100,61 +109,87 @@ export function Terminal({ onComplete }: TerminalProps) {
 
     const resolveId = await spinStage([
       'Resolving dependency graph...',
-      'Resolving dependency graph... cached 14 manifests',
+      'Resolving dependency graph... inspecting peer sets',
+      'Resolving dependency graph... pruning phantom edges',
       'Resolving dependency graph... hoisting workspace packages',
-    ], 12, 95);
-    replaceLog(resolveId, 'npm http fetch GET 200 https://registry.npmjs.org/entity 284ms (cache miss)', 'info', false);
+    ], 18, 80);
+    replaceLog(resolveId, 'npm timing arborist:ctor Completed in 1ms', 'info', false);
 
-    await wait(160);
-    addLog('npm http fetch GET 200 https://registry.npmjs.org/@google/genai 198ms (cache revalidated)', 'info');
-    await wait(120);
+    await wait(90);
+    addLog('npm http fetch GET 200 https://registry.npmjs.org/entity 284ms (cache miss)', 'info');
+    await wait(80);
+    addLog('npm http fetch GET 200 https://registry.npmjs.org/@google%2fgenai 198ms (cache revalidated)', 'info');
+    await wait(70);
     addLog('npm http fetch GET 200 https://registry.npmjs.org/node-telegram-bot-api 243ms (cache revalidated)', 'info');
+    await wait(70);
+    addLog('npm http fetch GET 200 https://registry.npmjs.org/better-sqlite3 301ms (cache miss)', 'info');
 
     const fetchId = await spinStage([
       'Fetching package metadata from registry...',
-      'Fetching tarballs... 7/26 complete',
-      'Fetching tarballs... 19/26 complete',
+      'Fetching tarballs... 8/31 complete',
+      'Fetching tarballs... 17/31 complete',
+      'Fetching tarballs... 26/31 complete',
       'Fetching tarballs... unpack queue saturated',
-    ], 16, 85);
+    ], 22, 75);
     replaceLog(fetchId, 'npm timing idealTree Completed in 3.42s', 'info', false);
 
-    const progressMarks = [8, 17, 29, 41, 58, 72, 86, 94, 100];
+    await wait(120);
+    addLog('npm verb reify failed optional dependency /usr/local/lib/node_modules/entity/node_modules/fsevents', 'warning');
+    await wait(100);
+    addLog('npm sill audit bulk request { entity, openai, vite, react, framer-motion, better-sqlite3 }', 'info');
+
+    const progressMarks = [3, 9, 14, 21, 28, 36, 43, 51, 59, 67, 74, 82, 89, 94, 97, 100];
     for (const progress of progressMarks) {
-      await wait(progress < 90 ? 150 : 220);
-      addLog(`npm sill install progress [${'█'.repeat(Math.floor(progress / 5)).padEnd(20, '░')}] ${progress}%`, 'info');
+      await wait(progress < 80 ? 110 : progress < 97 ? 160 : 240);
+      const bar = `${'█'.repeat(Math.floor(progress / 5)).padEnd(20, '░')}`;
+      const added = Math.max(1, Math.floor((214 * progress) / 100));
+      const downloaded = Math.max(2, Math.floor((96 * progress) / 100));
+      addLog(`npm sill install progress [${bar}] ${progress}% | downloaded ${downloaded}/96 | added ${added}/214`, 'info');
+      if (progress === 36) addLog('npm verb tarball tarball data for react@19.0.0 extracted in 124ms', 'info');
+      if (progress === 67) addLog('npm verb tarball tarball data for vite@6.2.0 extracted in 188ms', 'info');
+      if (progress === 89) addLog('npm verb rebuild better-sqlite3@12.4.1 source build success', 'success');
     }
 
-    await wait(180);
-    addLog('added 214 packages, and audited 215 packages in 11s', 'success');
-    await wait(120);
+    await wait(160);
+    addLog('added 214 packages, and audited 215 packages in 12s', 'success');
+    await wait(100);
     addLog('38 packages are looking for funding', 'info');
     addLog('  run `npm fund` for details', 'info');
-    await wait(120);
+    await wait(110);
     addLog('found 0 vulnerabilities', 'success');
-    await wait(220);
+    await wait(180);
 
     const postInstallId = await spinStage([
       'Running postinstall hooks...',
       'Running postinstall hooks... rebuilding native bindings',
       'Running postinstall hooks... generating runtime cache',
-    ], 14, 90);
+      'Running postinstall hooks... sealing config templates',
+    ], 18, 80);
     replaceLog(postInstallId, 'postinstall: generated 6 runtime assets in .entity/cache', 'info', false);
 
-    await wait(180);
-    addLog('> entity bootstrap --profile production', 'input');
-    await wait(140);
-    addLog('[entity] provisioning secure config channel...', 'info');
-    await wait(180);
+    await wait(130);
+    addLog('> entity bootstrap --profile production --telemetry=off', 'input');
+    await wait(100);
+    addLog('[entity] probing runtime surface...', 'info');
+    await wait(120);
+    addLog('[entity] mounting secure config channel...', 'info');
+    await wait(120);
     addLog('[entity] attaching telegram bridge module...', 'info');
-    await wait(220);
+    await wait(120);
+    addLog('[entity] linking local command bus...', 'info');
+    await wait(120);
     addLog('[entity] warming Gemini provider adapters...', 'info');
-    await wait(200);
+    await wait(120);
+    addLog('[entity] hydrating encrypted secret store...', 'info');
+    await wait(120);
     addLog('[entity] telemetry disabled by default', 'warning');
-    await wait(220);
+    await wait(140);
+    addLog('[entity] handshake complete, runtime healthy', 'success');
+    await wait(120);
     addLog('✔ Entity runtime installed successfully', 'success');
-    await wait(260);
+    await wait(220);
     addLog('--- AGENT CONFIGURATION REQUIRED ---', 'warning');
-    await wait(180);
+    await wait(120);
     addLog('Select AI Provider:', 'system');
     addLog('1. Google Gemini (Recommended)', 'info');
     addLog('2. OpenAI GPT-4', 'info');
