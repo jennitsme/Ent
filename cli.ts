@@ -16,7 +16,7 @@ program
 program
   .command('init')
   .description('Initialize configuration interactively')
-  .requiredOption('--provider <provider>', 'gemini|openai|anthropic|groq', 'gemini')
+  .requiredOption('--provider <provider>', 'gemini|openai|anthropic|groq|xai|openrouter|deepseek|mistral|together|fireworks|perplexity', 'gemini')
   .requiredOption('--api-key <key>', 'API key for the provider')
   .requiredOption('--bot-token <token>', 'Telegram bot token')
   .requiredOption('--chat-id <chatId>', 'Telegram chat id')

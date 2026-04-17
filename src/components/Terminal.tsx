@@ -192,9 +192,16 @@ export function Terminal({ onComplete }: TerminalProps) {
     await wait(120);
     addLog('Select AI Provider:', 'system');
     addLog('1. Google Gemini (Recommended)', 'info');
-    addLog('2. OpenAI GPT-4', 'info');
+    addLog('2. OpenAI', 'info');
     addLog('3. Anthropic Claude', 'info');
-    addLog('4. Groq (Llama 3)', 'info');
+    addLog('4. Groq', 'info');
+    addLog('5. xAI (Grok)', 'info');
+    addLog('6. OpenRouter', 'info');
+    addLog('7. DeepSeek', 'info');
+    addLog('8. Mistral AI', 'info');
+    addLog('9. Together AI', 'info');
+    addLog('10. Fireworks AI', 'info');
+    addLog('11. Perplexity', 'info');
     setStep('SELECT_PROVIDER');
   };
 
@@ -229,6 +236,27 @@ export function Terminal({ onComplete }: TerminalProps) {
       } else if (['4', 'groq'].includes(selection)) {
         selectedProvider = 'groq';
         providerName = 'Groq';
+      } else if (['5', 'xai', 'grok'].includes(selection)) {
+        selectedProvider = 'xai';
+        providerName = 'xAI (Grok)';
+      } else if (['6', 'openrouter'].includes(selection)) {
+        selectedProvider = 'openrouter';
+        providerName = 'OpenRouter';
+      } else if (['7', 'deepseek'].includes(selection)) {
+        selectedProvider = 'deepseek';
+        providerName = 'DeepSeek';
+      } else if (['8', 'mistral'].includes(selection)) {
+        selectedProvider = 'mistral';
+        providerName = 'Mistral AI';
+      } else if (['9', 'together'].includes(selection)) {
+        selectedProvider = 'together';
+        providerName = 'Together AI';
+      } else if (['10', 'fireworks'].includes(selection)) {
+        selectedProvider = 'fireworks';
+        providerName = 'Fireworks AI';
+      } else if (['11', 'perplexity'].includes(selection)) {
+        selectedProvider = 'perplexity';
+        providerName = 'Perplexity';
       }
 
       if (selectedProvider) {
@@ -237,7 +265,7 @@ export function Terminal({ onComplete }: TerminalProps) {
         addLog(`Please enter your ${providerName} API Key:`, 'system');
         setStep('CONFIG_API');
       } else {
-        addLog('Invalid selection. Please choose 1-4.', 'error');
+        addLog('Invalid selection. Please choose 1-11.', 'error');
       }
     } else if (step === 'CONFIG_API') {
       let isValid = false;
@@ -266,6 +294,48 @@ export function Terminal({ onComplete }: TerminalProps) {
           isValid = true;
         } else {
           errorMessage = 'Invalid Groq API Key. Must start with "gsk_".';
+        }
+      } else if (config.provider === 'xai') {
+        if (trimmed.startsWith('xai-') || trimmed.startsWith('xai_') || trimmed.length > 24) {
+          isValid = true;
+        } else {
+          errorMessage = 'Invalid xAI API Key.';
+        }
+      } else if (config.provider === 'openrouter') {
+        if (trimmed.startsWith('sk-or-') || trimmed.length > 24) {
+          isValid = true;
+        } else {
+          errorMessage = 'Invalid OpenRouter API Key. Usually starts with "sk-or-".';
+        }
+      } else if (config.provider === 'deepseek') {
+        if (trimmed.startsWith('sk-') || trimmed.length > 24) {
+          isValid = true;
+        } else {
+          errorMessage = 'Invalid DeepSeek API Key.';
+        }
+      } else if (config.provider === 'mistral') {
+        if (trimmed.length > 24) {
+          isValid = true;
+        } else {
+          errorMessage = 'Invalid Mistral API Key.';
+        }
+      } else if (config.provider === 'together') {
+        if (trimmed.length > 24) {
+          isValid = true;
+        } else {
+          errorMessage = 'Invalid Together AI API Key.';
+        }
+      } else if (config.provider === 'fireworks') {
+        if (trimmed.length > 24) {
+          isValid = true;
+        } else {
+          errorMessage = 'Invalid Fireworks AI API Key.';
+        }
+      } else if (config.provider === 'perplexity') {
+        if (trimmed.startsWith('pplx-') || trimmed.length > 24) {
+          isValid = true;
+        } else {
+          errorMessage = 'Invalid Perplexity API Key. Usually starts with "pplx-".';
         }
       }
 

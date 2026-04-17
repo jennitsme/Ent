@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  ENTITY combines a polished landing experience, a brutal terminal-style onboarding flow, multi-provider LLM support, Telegram integration, scheduled jobs, and a live control dashboard in one full-stack product.
+  ENTITY combines a polished landing experience, a brutal terminal-style onboarding flow, broad AI provider coverage, Telegram integration, scheduled jobs, and a live control dashboard in one full-stack product.
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@
 
 <p align="center">
   <a href="#overview">Overview</a> ·
-  <a href="#showcase">Showcase</a> ·
+  <a href="#ai-integrations">AI Integrations</a> ·
   <a href="#features">Features</a> ·
   <a href="#quick-start">Quick Start</a> ·
   <a href="#architecture">Architecture</a> ·
@@ -47,41 +47,94 @@ It is built for people who want their AI product to feel like infrastructure, no
 
 ---
 
-## Showcase
+## AI Integrations
 
-### Visual identity
+ENTITY now supports a broader provider layer so the runtime is not limited to only the most common model vendors.
 
-<p align="center">
-  <img src="./public/logo.png" alt="ENTITY logo" width="120" />
-</p>
-
-### Experience pillars
+### Currently wired in
 
 <table>
   <tr>
-    <td width="33%" valign="top">
-      <h3>Terminal-first onboarding</h3>
-      <p>Setup feels like deploying a live system, with staged install logs, provider selection, and guided runtime activation.</p>
+    <td align="center" width="20%">
+      <img src="https://cdn.simpleicons.org/google" alt="Google" height="28"><br />
+      <strong>Gemini</strong>
     </td>
-    <td width="33%" valign="top">
-      <h3>Operator dashboard</h3>
-      <p>Monitor skills, logs, scheduled jobs, and active runtime state from a single command-center style interface.</p>
+    <td align="center" width="20%">
+      <img src="https://cdn.simpleicons.org/openai" alt="OpenAI" height="28"><br />
+      <strong>OpenAI</strong>
     </td>
-    <td width="33%" valign="top">
-      <h3>Real integrations</h3>
-      <p>Hook the agent into Gemini, OpenAI, Claude, Groq, Telegram, and scheduled automation instead of keeping it trapped in a mock UI.</p>
+    <td align="center" width="20%">
+      <img src="https://cdn.simpleicons.org/anthropic" alt="Anthropic" height="28"><br />
+      <strong>Anthropic</strong>
+    </td>
+    <td align="center" width="20%">
+      <img src="https://cdn.simpleicons.org/groq" alt="Groq" height="28"><br />
+      <strong>Groq</strong>
+    </td>
+    <td align="center" width="20%">
+      <img src="https://cdn.simpleicons.org/x" alt="xAI" height="28"><br />
+      <strong>xAI</strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="20%">
+      <img src="https://cdn.simpleicons.org/openrouter" alt="OpenRouter" height="28"><br />
+      <strong>OpenRouter</strong>
+    </td>
+    <td align="center" width="20%">
+      <img src="https://cdn.simpleicons.org/deepseek" alt="DeepSeek" height="28"><br />
+      <strong>DeepSeek</strong>
+    </td>
+    <td align="center" width="20%">
+      <img src="https://cdn.simpleicons.org/mistralai" alt="Mistral AI" height="28"><br />
+      <strong>Mistral AI</strong>
+    </td>
+    <td align="center" width="20%">
+      <img src="https://cdn.simpleicons.org/perplexity" alt="Perplexity" height="28"><br />
+      <strong>Perplexity</strong>
+    </td>
+    <td align="center" width="20%">
+      <img src="https://cdn.simpleicons.org/databricks" alt="Together / Fireworks" height="28"><br />
+      <strong>Together / Fireworks</strong>
     </td>
   </tr>
 </table>
 
-### Suggested future media
+### Provider support model
 
-If you want this repo to look even more premium, these are the next best assets to add:
-- hero banner image for the top of the README,
-- landing page screenshot,
-- terminal onboarding screenshot,
-- dashboard screenshot,
-- Open Graph / social preview image for GitHub sharing.
+ENTITY currently uses two integration paths:
+
+1. **Native Gemini path**
+   - Google Gemini via `@google/genai`
+
+2. **OpenAI-compatible path**
+   - OpenAI
+   - Groq
+   - xAI
+   - OpenRouter
+   - DeepSeek
+   - Mistral AI
+   - Together AI
+   - Fireworks AI
+   - Perplexity
+
+That means expanding provider coverage is fast as long as the vendor exposes an OpenAI-compatible API surface.
+
+### Current provider list in setup flow
+
+- Google Gemini
+- OpenAI
+- Anthropic Claude
+- Groq
+- xAI (Grok)
+- OpenRouter
+- DeepSeek
+- Mistral AI
+- Together AI
+- Fireworks AI
+- Perplexity
+
+> Note: Anthropic is listed in the setup flow for product completeness, but the current backend path is optimized around Gemini-native plus OpenAI-compatible providers. If you want fully native Anthropic support next, that should be a dedicated follow-up implementation.
 
 ---
 
@@ -97,7 +150,7 @@ It gives you:
 - a visually distinctive frontend,
 - a guided onboarding flow,
 - a real backend runtime,
-- multi-model provider support,
+- broad multi-model provider support,
 - messaging integration,
 - scheduled execution,
 - and a structure that can grow into a more serious deployment platform.
@@ -106,11 +159,25 @@ It gives you:
 
 ## Features
 
-### AI providers
+### AI platform layer
+- native Google Gemini integration
+- OpenAI-compatible provider routing
+- multi-provider setup flow from the terminal UI
+- provider-aware API key validation
+- model/provider switching through persisted config
+
+### Supported providers
 - Google Gemini
 - OpenAI
 - Anthropic Claude
 - Groq
+- xAI
+- OpenRouter
+- DeepSeek
+- Mistral AI
+- Together AI
+- Fireworks AI
+- Perplexity
 
 ### Product experience
 - cinematic landing page
@@ -175,8 +242,8 @@ Operate Agent Runtime
          ┌───────────────┼────────────────┬───────────────┐
          ▼               ▼                ▼               ▼
    AI Providers      Telegram Bot      Scheduler      Local Store
- Gemini/OpenAI/      Integration       Cron Jobs      Config/State
- Claude/Groq
+ Gemini / OpenAI     Integration       Cron Jobs      Config/State
+ Compatible APIs
 ```
 
 ### Frontend
@@ -249,10 +316,26 @@ npm install -g .
 
 ```bash
 entity init \
-  --provider gemini \
+  --provider openrouter \
   --api-key <KEY> \
   --bot-token <TELEGRAM_BOT_TOKEN> \
   --chat-id <CHAT_ID>
+```
+
+### Supported provider flags
+
+```text
+gemini
+openai
+anthropic
+groq
+xai
+openrouter
+deepseek
+mistral
+together
+fireworks
+perplexity
 ```
 
 ### Start runtime
@@ -299,7 +382,11 @@ Entity/
 │   │   └── utils.ts
 │   ├── server/
 │   │   ├── db.ts
-│   │   └── store.ts
+│   │   ├── store.ts
+│   │   └── services/
+│   │       ├── AgentService.ts
+│   │       ├── CronService.ts
+│   │       └── TelegramService.ts
 │   ├── App.tsx
 │   └── main.tsx
 ├── cli.ts
@@ -359,26 +446,6 @@ For now, the GitHub side is the priority, so this repo is being cleaned up first
 
 ---
 
-## Branding direction
-
-ENTITY currently uses a strong sci-fi / cyber-ops presentation style.
-
-That works well for:
-- launch videos,
-- landing pages,
-- GitHub profile presentation,
-- product screenshots,
-- and “operator tool” positioning.
-
-To make the brand more cohesive, the next cleanup pass should standardize naming across:
-- `ENTITY`
-- `Entity`
-- `ENTITY.OS`
-
-Right now the repo is close, but not fully normalized yet.
-
----
-
 ## Roadmap
 
 ### Repository polish
@@ -386,6 +453,7 @@ Right now the repo is close, but not fully normalized yet.
 - [x] switch in-app GitHub links to official repo
 - [x] rewrite README with stronger structure
 - [x] upgrade README to a more premium presentation
+- [x] expand README provider coverage
 - [ ] add README banner
 - [ ] add screenshots
 - [ ] add social preview image
@@ -394,6 +462,8 @@ Right now the repo is close, but not fully normalized yet.
 ### Product evolution
 - [x] immersive install simulation
 - [x] more brutal terminal output
+- [x] broader AI provider selection
+- [ ] native Anthropic implementation
 - [ ] richer setup states and validation UX
 - [ ] provider health visibility
 - [ ] deeper dashboard telemetry
@@ -413,18 +483,6 @@ Right now the repo is close, but not fully normalized yet.
 
 - Repository: https://github.com/YourEntity/Entity
 - GitHub owner: https://github.com/YourEntity
-
----
-
-## Contributing
-
-Contribution flow has not been formalized yet.
-
-Once the repo structure and deployment posture are fully stabilized, the next good step is adding:
-- issue templates,
-- pull request templates,
-- contribution guidelines,
-- release notes workflow.
 
 ---
 
