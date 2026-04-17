@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Terminal as TerminalIcon } from 'lucide-react';
+import { Terminal as TerminalIcon, LoaderCircle } from 'lucide-react';
 
 type Config = { apiKey: string; botToken: string; chatId: string; provider: string; authToken: string };
 
@@ -15,6 +15,7 @@ interface LogLine {
   id: string;
   text: string;
   type: 'info' | 'success' | 'warning' | 'error' | 'input' | 'system';
+  ephemeral?: boolean;
 }
 
 export function Terminal({ onComplete }: TerminalProps) {
@@ -51,57 +52,109 @@ export function Terminal({ onComplete }: TerminalProps) {
     typingTimeoutRef.current = setTimeout(() => setIsTyping(false), 100);
   };
 
-  const addLog = (text: string, type: LogLine['type'] = 'info') => {
-    setHistory(prev => [...prev, { id: Math.random().toString(36).substr(2, 9), text, type }]);
+  const addLog = (text: string, type: LogLine['type'] = 'info', ephemeral = false) => {
+    const id = Math.random().toString(36).slice(2, 11);
+    setHistory(prev => [...prev, { id, text, type, ephemeral }]);
+    return id;
   };
+
+  const replaceLog = (id: string, text: string, type?: LogLine['type'], ephemeral?: boolean) => {
+    setHistory(prev => prev.map(line => line.id === id ? { ...line, text, type: type ?? line.type, ephemeral: ephemeral ?? line.ephemeral } : line));
+  };
+
+  const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
   const simulateInstall = async () => {
     setStep('INSTALLING');
-    
+
     const asciiArt = [
-      "███████╗███╗   ██╗████████╗██╗████████╗██╗   ██╗",
-      "██╔════╝████╗  ██║╚══██╔══╝██║╚══██╔══╝╚██╗ ██╔╝",
-      "█████╗  ██╔██╗ ██║   ██║   ██║   ██║    ╚████╔╝ ",
-      "██╔══╝  ██║╚██╗██║   ██║   ██║   ██║     ╚██╔╝  ",
-      "███████╗██║ ╚████║   ██║   ██║   ██║      ██║   ",
-      "╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝   ╚═╝      ╚═╝   "
+      '███████╗███╗   ██╗████████╗██╗████████╗██╗   ██╗',
+      '██╔════╝████╗  ██║╚══██╔══╝██║╚══██╔══╝╚██╗ ██╔╝',
+      '█████╗  ██╔██╗ ██║   ██║   ██║   ██║    ╚████╔╝ ',
+      '██╔══╝  ██║╚██╗██║   ██║   ██║   ██║     ╚██╔╝  ',
+      '███████╗██║ ╚████║   ██║   ██║   ██║      ██║   ',
+      '╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝   ╚═╝      ╚═╝   ',
     ];
 
     for (const line of asciiArt) {
-      await new Promise(r => setTimeout(r, 100));
+      await wait(75);
       addLog(line, 'system');
     }
 
-    const steps = [
-      { text: 'Initializing package manager...', delay: 1500 },
-      { text: 'Resolving dependency tree...', delay: 2000 },
-      { text: 'Fetching @entity/core (v1.0.0)...', delay: 2500 },
-      { text: 'Fetching @entity/agent-kit...', delay: 1800 },
-      { text: 'Fetching @entity/telegram-bridge...', delay: 2200 },
-      { text: 'Verifying package integrity signatures...', delay: 3000 },
-      { text: 'Downloading binary artifacts [34MB]...', delay: 4000 },
-      { text: '[###.................] 15%', delay: 500 },
-      { text: '[######..............] 30%', delay: 500 },
-      { text: '[#########...........] 45%', delay: 500 },
-      { text: '[############........] 60%', delay: 500 },
-      { text: '[###############.....] 75%', delay: 500 },
-      { text: '[##################..] 90%', delay: 500 },
-      { text: '[####################] 100%', delay: 500 },
-      { text: 'Extracting modules to /usr/local/bin/entity...', delay: 2500 },
-      { text: 'Compiling native extensions (node-gyp)...', delay: 3500 },
-      { text: 'Optimizing AI inference engine...', delay: 2800 },
-      { text: 'Configuring local environment variables...', delay: 1500 },
-      { text: 'Registering system services...', delay: 1200 },
-      { text: 'Cleaning up temporary files...', delay: 800 },
-      { text: 'Installation complete.', type: 'success', delay: 1000 },
-      { text: '--- AGENT CONFIGURATION REQUIRED ---', type: 'warning', delay: 1000 },
-    ];
+    await wait(250);
+    addLog('$ npm install -g entity', 'input');
+    await wait(180);
+    addLog('npm notice', 'warning');
 
-    for (const s of steps) {
-      await new Promise(r => setTimeout(r, s.delay));
-      addLog(s.text, s.type as any || 'info');
+    const installFrames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+    const spinStage = async (messages: string[], loops: number, delay = 90) => {
+      const id = addLog(`${installFrames[0]} ${messages[0]}`, 'info', true);
+      for (let i = 0; i < loops; i++) {
+        const frame = installFrames[i % installFrames.length];
+        const message = messages[i % messages.length];
+        replaceLog(id, `${frame} ${message}`, 'info', true);
+        await wait(delay);
+      }
+      return id;
+    };
+
+    const resolveId = await spinStage([
+      'Resolving dependency graph...',
+      'Resolving dependency graph... cached 14 manifests',
+      'Resolving dependency graph... hoisting workspace packages',
+    ], 12, 95);
+    replaceLog(resolveId, 'npm http fetch GET 200 https://registry.npmjs.org/entity 284ms (cache miss)', 'info', false);
+
+    await wait(160);
+    addLog('npm http fetch GET 200 https://registry.npmjs.org/@google/genai 198ms (cache revalidated)', 'info');
+    await wait(120);
+    addLog('npm http fetch GET 200 https://registry.npmjs.org/node-telegram-bot-api 243ms (cache revalidated)', 'info');
+
+    const fetchId = await spinStage([
+      'Fetching package metadata from registry...',
+      'Fetching tarballs... 7/26 complete',
+      'Fetching tarballs... 19/26 complete',
+      'Fetching tarballs... unpack queue saturated',
+    ], 16, 85);
+    replaceLog(fetchId, 'npm timing idealTree Completed in 3.42s', 'info', false);
+
+    const progressMarks = [8, 17, 29, 41, 58, 72, 86, 94, 100];
+    for (const progress of progressMarks) {
+      await wait(progress < 90 ? 150 : 220);
+      addLog(`npm sill install progress [${'█'.repeat(Math.floor(progress / 5)).padEnd(20, '░')}] ${progress}%`, 'info');
     }
 
+    await wait(180);
+    addLog('added 214 packages, and audited 215 packages in 11s', 'success');
+    await wait(120);
+    addLog('38 packages are looking for funding', 'info');
+    addLog('  run `npm fund` for details', 'info');
+    await wait(120);
+    addLog('found 0 vulnerabilities', 'success');
+    await wait(220);
+
+    const postInstallId = await spinStage([
+      'Running postinstall hooks...',
+      'Running postinstall hooks... rebuilding native bindings',
+      'Running postinstall hooks... generating runtime cache',
+    ], 14, 90);
+    replaceLog(postInstallId, 'postinstall: generated 6 runtime assets in .entity/cache', 'info', false);
+
+    await wait(180);
+    addLog('> entity bootstrap --profile production', 'input');
+    await wait(140);
+    addLog('[entity] provisioning secure config channel...', 'info');
+    await wait(180);
+    addLog('[entity] attaching telegram bridge module...', 'info');
+    await wait(220);
+    addLog('[entity] warming Gemini provider adapters...', 'info');
+    await wait(200);
+    addLog('[entity] telemetry disabled by default', 'warning');
+    await wait(220);
+    addLog('✔ Entity runtime installed successfully', 'success');
+    await wait(260);
+    addLog('--- AGENT CONFIGURATION REQUIRED ---', 'warning');
+    await wait(180);
     addLog('Select AI Provider:', 'system');
     addLog('1. Google Gemini (Recommended)', 'info');
     addLog('2. OpenAI GPT-4', 'info');
@@ -314,10 +367,13 @@ export function Terminal({ onComplete }: TerminalProps) {
           )}
           {step === 'INSTALLING' && (
              <motion.div 
-               animate={{ opacity: [0, 1, 0] }} 
-               transition={{ repeat: Infinity, duration: 0.8 }}
-               className="w-2 h-4 bg-white inline-block mt-2"
-             />
+               className="inline-flex items-center gap-2 mt-2 text-white/70"
+               animate={{ opacity: [0.45, 1, 0.45] }}
+               transition={{ repeat: Infinity, duration: 1.1 }}
+             >
+               <LoaderCircle className="w-4 h-4 animate-spin" />
+               <span className="text-xs tracking-wider uppercase">Installer active</span>
+             </motion.div>
           )}
         </div>
       </motion.div>
